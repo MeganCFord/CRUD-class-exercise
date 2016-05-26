@@ -4,41 +4,52 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>CRUD in-class exercise</title>
-  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>Cruddy To-Do App</h1>
-
-    <div class="add">
-      <form >
-        <input class="form-control" type="text" placeholder="add a To-Do item">
-        <input class="btn btn-primary" type="submit">
+    <div class="login">
+      <form>
+        <h2>Log In</h2>
+        <input class="form-control" type="text" placeholder="user@example.com">
+        <input class="form-control" type="password" placeholder="P@s$w0rD">
+        <input class="btn btn-warning" type="button" value="Register">
+        <input class="btn btn-primary" type="submit" value="Login">
       </form>
     </div>
+    <div class="app">
+      <div class="add">
+        <form class="newTask">
+          <input class="theTextBox form-control" type="text" placeholder="add a To-Do item">
+          <input class="btn btn-primary" type="submit">
+        </form>
+      </div>
 
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        <!-- will be filled out with AJAX. sample item below; 
-          <tr>
-            <td>Make a Todo list</td>
-            <td>
-              <button class = "btn btn-success">Complete</button>
-              <button class="btn btn-danger">Delete</button>
-          </tr> -->
-        </tbody>
-      </table>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- will be filled out with AJAX Data. sample item below; 
+            <tr>
+              <td class="taskText">Make a Todo list</td>
+              <td>
+                <button class = "btn btn-success complete">Complete</button>
+                <button class="btn btn-danger delete">Delete</button>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <script src="vendor/jquery/dist/jquery.min.js"></script>
-  <script src="script.js"></script>
+  <script type="text/javascript" src ="vendor/firebase/firebase.js"></script>
+  <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,11 @@
 h1 {
   color: purple;
 }
+
+.completed {
+  text-decoration: line-through;
+}
+
+.app {
+  display: none;
+}

@@ -4,11 +4,39 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>CRUD in-class exercise</title>
-  <link rel="vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Crud To-Do App</h1>
+  <div class="container">
+    <h1>Crud To-Do App</h1>
+
+    <div class="add">
+      <form >
+        <input class="form-control" type="text" placeholder="add a To-Do item">
+        <input class="btn btn-primary" type="submit">
+      </form>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Make a Todo list</td>
+            <td>
+              <button class = "btn btn-success">Complete</button>
+              <button class="btn btn-danger">Delete</button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <script src="vendor/jquery/dist/jquery.min.js"></script>
   <script src="script.js"></script>
 </body>

@@ -1,16 +1,15 @@
 /*eslint-disable no-console */
 /*global firebase:false*/
 
+
 $(() =>{ //jquery ready function.
   // console.log("DOM READY!");
   //the same as: $.ready(function() {
   // console.log("DOM READY!");
   // })
-
+  let token = null;
+  const API_URL = `https://crud-nss-5-26-class-exercise.firebaseio.com/tasks`;
 //ok so first I went onto firebase and made a new project. then I can add the name of the super-object (in this case task) to the end of the URL. took the ".json" off, since I needed to add ID's to the end of this URL for the individual complete/delete buttons. 
-
-  const API_URL = "https://crud-nss-5-26-class-exercise.firebaseio.com/task";
-
 
 //we also had bower install firebase --save
 
@@ -23,13 +22,66 @@ $(() =>{ //jquery ready function.
     storageBucket: "crud-nss-5-26-class-exercise.appspot.com"
   });
 
+  // both return promise like objects
+  const login = (email, password) => (
+    firebase.auth()
+      .signInWithEmailAndPassword(email, password)
+
+  );
+
+  const register = (user, password) => (
+    firebase.auth().createUserWithEmailAndPassword(user, password)
+  );
+
+  $(".login form").submit((e) => {
+    const form = $(e.target);
+    const email = form.find('input[type="text"]').val();
+    const password = form.find('input[type="password"]').val();
+
+    login(email, password)
+      .then(console.log)
+      .catch(console.err);
+
+    e.preventDefault();
+  });
+
+  $('input[value="Register"]').click((e) => {
+    const form = $(e.target).closest("form");
+    const email = form.find('input[type="text"]').val();
+    const password = form.find('input[type="password"]').val();
+
+    register(email, password)
+      .then(() => login(email, password))
+      .then(console.log)
+      .catch(console.err);
+
+    e.preventDefault();
+  });
+  
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      token = user._lat;
+      $(".login").hide();
+      $(".app").show();
+      loadTheThings();
+    } else {
+      $(".login").show();
+      $(".app").hide();
+      // logged out
+    }
+  });
+
+  $(".logout").on("click", function() {
+    firebase.auth().signOut();
+    token=null;
+  });
+
 //READ: GET data from firebase and display in table. Runs at start. Could technically also run at submit button if I assigned it a name, but see below for instead.
 
   function loadTheThings () { 
     $("tbody").text("");
-    $.get(`${API_URL}.json`)
+    $.get(`${API_URL}.json?auth=${token}`)
       .done((data) => {
-        console.log("data gotten from getter", data);
         //if the object doesn't exist, firebase will return null. ONE WAY:
         //if (data===null) {
           //return //get out of the function and stop. 
@@ -50,7 +102,6 @@ $(() =>{ //jquery ready function.
         }
       });
   }
-  loadTheThings();
 
  //CREATE: form submit event to POST data to firebase. Here I am NOT reloading the entire database object, although it can be- I'm simply running the dom object with the ID that's returned by the POST Jquery method. 
  
@@ -63,11 +114,10 @@ $(() =>{ //jquery ready function.
     //$.post(`${API_URL}.json`, JSON.stringify({"task": "I was posted!"}))
     //ANOTHER OPTION:  
     $.ajax({ //settings object
-      url: `${API_URL}.json`, 
+      url: `${API_URL}.json?auth=${token}`, 
       method: "POST",
       data: JSON.stringify({task: `${theText}`}) //is going to be the text entered in the form. 
-    }).done((id) => { //the POST action returns the ID 
-      console.log("id from json", id );
+    }).done(() => { //the POST action returns the ID so if you put ID in this argument, you can use it for stuff.
       loadTheThings();
     });
     $(".theTextBox").val("");
@@ -81,7 +131,7 @@ $(() =>{ //jquery ready function.
     const id = row.data("id");
   //debugger //we put a debugger here to check what the ID is. 
     $.ajax({
-      url: `${API_URL}/${id}.json`,
+      url: `${API_URL}/${id}.json?auth=${token}`,
       method: "DELETE"
     }).done(() => {
       row.remove();
@@ -97,7 +147,7 @@ $(() =>{ //jquery ready function.
     const id = row.data("id");
 
     $.ajax({
-      url:`${API_URL}/${id}.json`,
+      url:`${API_URL}/${id}.json?auth=${token}`,
       method: "PATCH",
       data: JSON.stringify({completed: true})
     });

@@ -1,0 +1,23 @@
+{
+  "name": "CRUD-class-exercise",
+  "homepage": "https://github.com/MeganCFord/CRUD-class-exercise",
+  "authors": [
+    "Megan Ford <meg.c.ford@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "^2.2.4"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
